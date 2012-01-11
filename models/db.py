@@ -71,3 +71,26 @@ use_janrain(auth,filename='private/janrain.key')
 ## >>> rows=db(db.mytable.myfield=='value').select(db.mytable.ALL)
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
+
+# Signature
+signature = db.Table( db, 'signature',
+					Field('created_on', 'datetime', default=request.now),
+					Field('created_by', db.auth_user, default=auth.user_id),
+					Field('updated_on', 'datetime', update=request.now),
+					Field('updated_by', db.auth_user, update=auth.user_id) )
+# Publications
+db.define_table( 'publication', 
+				Field('title', 'string', required = True),
+				Field('sub_title', 'string'), signature )
+# Columns
+db.define_table( 'column', 
+				Field('title', 'string', required = True),
+				Field('publication_id', db.publication), signature )
+# Rows
+db.define_table( 'row', 
+				Field('content', 'text', required = True),
+				Field('column_id', 'integer', db.column), signature )
+# Quotes
+db.define_table( 'quote', 
+				Field('content', 'text', required = True),
+				Field('publications_id', 'integer', db.publication), signature )

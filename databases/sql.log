@@ -1,0 +1,118 @@
+timestamp: 2012-01-11T16:21:13.870250
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512)
+);
+success!
+timestamp: 2012-01-11T16:21:14.017440
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-01-11T16:21:14.120232
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-01-11T16:21:14.287852
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2012-01-11T16:21:14.393728
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-01-11T16:21:14.522559
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    url CHAR(512),
+    uuid CHAR(512)
+);
+success!
+timestamp: 2012-01-11T16:57:47.960583
+CREATE TABLE publications(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    sub_title CHAR(512)
+);
+success!
+timestamp: 2012-01-11T16:58:17.407748
+CREATE TABLE columns(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    publication_id INTEGER
+);
+success!
+timestamp: 2012-01-11T16:58:17.527199
+CREATE TABLE rows(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT,
+    column_id INTEGER
+);
+success!
+timestamp: 2012-01-11T17:09:31.634272
+CREATE TABLE publication(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    sub_title CHAR(512),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    updated_on TIMESTAMP,
+    updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-01-11T17:10:34.001213
+CREATE TABLE column(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    publication_id INTEGER,
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    updated_on TIMESTAMP,
+    updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-01-11T17:10:34.261448
+CREATE TABLE row(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT,
+    column_id INTEGER,
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    updated_on TIMESTAMP,
+    updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-01-11T17:10:34.463939
+CREATE TABLE quote(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT,
+    publications_id INTEGER,
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    updated_on TIMESTAMP,
+    updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
+);
+success!
