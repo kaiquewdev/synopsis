@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
+import functions as f
 
+@auth.requires_membership('admin')
 def index():
-    return dict(message=T('Hello World'))
+	publications = f.get_publications(db, order='created_on')
+	return { 'publications': publications }
 
 def user():
     return dict(form=auth())
 
-
 def download():
     return response.download(request,db)
 
-
 def call():
     return service()
-
 
 @auth.requires_signature()
 def data():

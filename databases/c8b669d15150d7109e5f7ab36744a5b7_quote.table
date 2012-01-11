@@ -1,80 +1,81 @@
 (dp1
-S'updated_by'
+S'content'
 p2
 (dp3
 S'type'
 p4
-S'reference auth_user'
+S'text'
 p5
 sS'sortable'
 p6
-I7
+I2
 sS'sql'
 p7
-S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+S'TEXT'
 p8
-ssS'created_by'
+ssS'created_on'
 p9
 (dp10
 g4
-S'reference auth_user'
-p11
-sg6
-I5
-sg7
-S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
-p12
-ssS'content'
-p13
-(dp14
-g4
-S'text'
-p15
-sg6
-I2
-sg7
-S'TEXT'
-p16
-ssS'created_on'
-p17
-(dp18
-g4
 S'datetime'
-p19
+p11
 sg6
 I4
 sg7
 S'TIMESTAMP'
-p20
+p12
 ssS'publications_id'
-p21
-(dp22
+p13
+(dp14
 g4
-S'integer'
-p23
+S'reference publication'
+p15
 sg6
 I3
 sg7
-S'INTEGER'
-p24
-ssS'updated_on'
-p25
-(dp26
+S'INTEGER REFERENCES publication(id) ON DELETE CASCADE'
+p16
+ssS'updated_by'
+p17
+(dp18
 g4
-g19
+S'reference auth_user'
+p19
+sg6
+I7
+sg7
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p20
+ssS'updated_on'
+p21
+(dp22
+g4
+g11
 sg6
 I6
 sg7
 S'TIMESTAMP'
-p27
+p23
 ssS'id'
-p28
-(dp29
+p24
+(dp25
 g4
-g28
+S'id'
+p26
 sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p27
+ssS'created_by'
+p28
+(dp29
+g4
+S'reference auth_user'
 p30
+sg6
+I5
+sg7
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p31
 ss.

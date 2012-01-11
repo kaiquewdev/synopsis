@@ -89,8 +89,8 @@ db.define_table( 'column',
 # Rows
 db.define_table( 'row', 
 				Field('content', 'text', required = True),
-				Field('column_id', 'integer', db.column), signature )
+				Field('column_id', db.column), signature )
 # Quotes
 db.define_table( 'quote', 
 				Field('content', 'text', required = True),
-				Field('publications_id', 'integer', db.publication), signature )
+				Field('publications_id', db.publication), signature )
