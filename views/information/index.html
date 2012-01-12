@@ -1,0 +1,40 @@
+{{ extend 'layout.html' }}
+
+<div class="content">
+	<section>
+		<article>
+			<header>
+				<h1>Synopses</h1>
+				<hr />
+			</header>
+			
+			<div>
+				{{if subject:}}
+					<table style="border: 1px solid #ccc;">
+						<thead>
+							<tr>
+								<td>Title of subject</td>
+								<td></td>
+							</tr>
+						</thead>
+						
+						<tbody>
+							{{for row in subject:}}
+								<tr>
+									<td>
+										{{=row.name}}
+									</td>
+									<td>
+										{{=A( T('Visualize'), _href = URL('information', 'profile', args = [row.id])) }}
+									</td>
+								</tr>
+							{{pass}}
+						</tbody>
+					</table>
+				{{else:}}
+					{{=P( T('Not synopse, registred! {0}'.format( A(T('Create new'), _href = URL('information', 'new') ) ) ) )}}
+				{{pass}}
+			</div>
+		</article>
+	</section>
+</div>

@@ -78,10 +78,15 @@ signature = db.Table( db, 'signature',
 					Field('created_by', db.auth_user, default=auth.user_id),
 					Field('updated_on', 'datetime', update=request.now),
 					Field('updated_by', db.auth_user, update=auth.user_id) )
+
+# Subjects
+db.define_table( 'subject',
+				Field('name', 'string', required = True), signature )					
 # Publications
 db.define_table( 'publication', 
 				Field('title', 'string', required = True),
-				Field('sub_title', 'string'), signature )
+				Field('sub_title', 'string'),
+				Field('subject_id', db.subject), signature )
 # Columns
 db.define_table( 'column', 
 				Field('title', 'string', required = True),

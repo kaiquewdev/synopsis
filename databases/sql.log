@@ -116,3 +116,15 @@ CREATE TABLE quote(
     updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
 );
 success!
+timestamp: 2012-01-11T22:05:00.025286
+CREATE TABLE subject(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    updated_on TIMESTAMP,
+    updated_by INTEGER REFERENCES auth_user(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-01-11T22:05:00.160267
+ALTER TABLE publication ADD subject_id INTEGER REFERENCES subject(id) ON DELETE CASCADE;

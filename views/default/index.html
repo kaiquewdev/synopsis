@@ -3,38 +3,6 @@
 <div class="content">
 	<section>
 		<article>
-			<header>
-				<h1>Synopses</h1>
-				<hr />
-			</header>
-			
-			<div>
-				{{if publications:}}
-					<table style="border: 1px solid #ccc;">
-						<thead>
-							<tr>
-								<td>Synopse title</td>
-								<td></td>
-							</tr>
-						</thead>
-						
-						<tbody>
-							{{for row in publications:}}
-								<tr>
-									<td>
-										{{=row.title}}
-									</td>
-									<td>
-										{{=A( T('Visualize'), _href = URL('information', 'profile', args = [row.id])) }}
-									</td>
-								</tr>
-							{{pass}}
-						</tbody>
-					</table>
-				{{else:}}
-					{{=P( T('Not synopse, registred! {0}'.format( A('Create new', _href = URL('information', 'new') ) ) ) )}}
-				{{pass}}
-			</div>
 		</article>
 	</section>
 </div>

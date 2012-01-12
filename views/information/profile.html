@@ -1,0 +1,37 @@
+{{ extend 'layout.html' }}
+
+<div class="content">
+	<section>
+		<article>
+			{{if not profile: redirect(URL('information')) }}
+			{{for subject in profile: }}
+			<header>
+				<h1>{{=subject.name}}</h1>
+				<hr />
+			</header>
+			<div>
+					{{for detail in subject.publication.select():}} {{if detail.subject_id == subject.id:}}
+						<h3>{{=detail.title}}</h3>
+						{{if detail.sub_title:}} <h4 style="font-weight: 200;">{{=detail.sub_title}}</h4> {{pass}}
+					{{pass}} {{pass}}
+					
+					<table style="border: 1px solid #ccc;">
+						<thead>
+							<tr>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+								<tr>
+									<td>
+									</td>
+									<td>
+									</td>
+								</tr>
+						</tbody>
+					</table>
+			</div>
+			{{pass}}
+		</article>
+	</section>
+</div>

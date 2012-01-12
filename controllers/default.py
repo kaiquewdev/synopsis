@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-import functions as f
 
-@auth.requires_membership('admin')
 def index():
-	publications = f.get_publications(db, order='created_on')
-	return { 'publications': publications }
-
+	return {}
+	
 def user():
     return dict(form=auth())
 
