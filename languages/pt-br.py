@@ -114,6 +114,7 @@
 'Videos': 'Videos',
 'View': 'Visualização',
 'Visualize': 'Visualize',
+'Visualize this publication': 'Visualize this publication',
 'Web2py': 'Web2py',
 'Welcome': 'Welcome',
 'Welcome %s': 'Vem vindo %s',

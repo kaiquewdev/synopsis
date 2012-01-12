@@ -1,0 +1,38 @@
+{{ extend 'layout.html' }}
+
+<div class="content">
+	<section>
+		<article>
+			{{for detail in publication: }}
+			<header>
+				<h1>{{=detail.title}}</h1>
+				<h4 style="font-weight: 200;">{{if detail.sub_title:}} {{=detail.title}} {{pass}}</h4>
+				<hr />
+			</header>
+			<div>	
+				<table style="border: 1px solid #ccc; margin: 10px 0 10px;">
+					{{for column in detail.column.select():}} {{if column.publication_id == column.id:}}
+					<thead>
+						<tr>
+								<td>{{=column.title}}</td>							
+						</tr>
+					</thead>
+					<tbody>
+						{{for row in column.row.select():}} {{if row.column_id == column.id:}}
+							<tr>
+								<td>{{=row.content}}</td>
+							</tr>
+						{{pass}} {{pass}}
+					</tbody>
+					{{pass}} {{pass}}
+				</table>
+				<div classs="quote">
+				{{for quote in detail.quote.select():}} {{if quote.publications_id == detail.id:}}
+					<p>{{=quote.content}}</p>
+				{{pass}} {{pass}}
+				</div>
+			</div>
+			{{pass}}
+		</article>
+	</section>
+</div>
