@@ -18,9 +18,13 @@ def profile(): # Show the profile of subject
 @auth.requires_membership('admin')
 def publication(): # Show the publication profile
 	args = request.args # query url's
-	if args: publication = f.get_table(db, 'publication', id=args[0]) 
+	count_equals = f.count_equals
+	if args: 
+		publication = f.get_table(db, 'publication', id=args[0])
+		session.back = args[0] 
 	if not args or not publication: return redirect( URL('profile') )
-	return { 'publication': publication }
+	return { 'publication': publication, 
+			 'count_equals': count_equals }
 
 @auth.requires_membership('admin')
 def new(): # Create a new subject
@@ -41,7 +45,7 @@ def new(): # Create a new subject
 		return { 'form': subject, 
 			 	 'title': title }
 	
-	if args[0] == 'publication':
+	elif args[0] == 'publication':
 		title = 'Publication'
 		publication = SQLFORM(db.publication, fields=['title', 'sub_title'])
 		publication.vars.subject_id = args[1]
@@ -53,6 +57,32 @@ def new(): # Create a new subject
 			response.flahs = T('Please, fill the field...')
 	
 		return { 'form': publication,
+				 'title': title }
+	elif args[0] == 'column':
+		title = 'Topic'
+		column = SQLFORM(db.column, fields=['title'])
+		column.vars.publication_id = args[1]
+		if column.process().accepted:
+			response.flash = T(T('{0} {1} {2}'.format('New', title.lower(), 'inserted!')))
+		elif column.errors:
+			response.flash = T('Sorry, try again!')
+		else:
+			response.flahs = T('Please, fill the field...')
+	
+		return { 'form': column,
+				 'title': title }
+	elif args[0] == 'row':
+		title = 'Row for {0}'.format(db.column(args[1])['title'])
+		row = SQLFORM(db.row, fields=['content'])
+		row.vars.column_id = args[1]
+		if row.process().accepted:
+			response.flash = T(T('{0} {1} {2}'.format('New', title.lower(), 'inserted!')))
+		elif row.errors:
+			response.flash = T('Sorry, try again!')
+		else:
+			response.flahs = T('Please, fill the field...')
+	
+		return { 'form': row,
 				 'title': title }
 			 	 
 @auth.requires_membership('admin')

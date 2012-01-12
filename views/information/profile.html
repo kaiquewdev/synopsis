@@ -20,7 +20,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{{for detail in subject.publication.select():}} {{if detail.subject_id == subject.id:}}
+						{{for detail in subject.publication.select():}}
 						<tr>
 							<td>
 								{{=detail.title}}
@@ -33,7 +33,7 @@
 								)}}
 							</td>
 						</tr>
-						{{pass}} {{pass}}
+						{{pass}}
 					</tbody>
 				</table>
 			</div>

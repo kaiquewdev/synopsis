@@ -5,7 +5,8 @@
 		<article>
 			{{for detail in publication: }}
 			<header>
-				{{=A( T('Go back to publications table'), _href=URL('information', 'profile', args=[session.index]) )}}
+				{{=A( T('Go back to publications table'), _href=URL('information', 'profile', args=[session.index]) )}} |
+				{{=A(T('Insert a new column'), _href=URL('new', args=['column', request.args[0]]) )}}
 				<hr />
 				<h1>{{=detail.title}}</h1>
 				<h4 style="font-weight: 200;">{{if detail.sub_title:}} {{=detail.sub_title}} {{pass}}</h4>
@@ -13,20 +14,22 @@
 			</header>
 			<div>	
 				<table style="border: 1px solid #ccc; margin: 10px 0 10px;">
-					{{for column in detail.column.select():}} {{if column.publication_id == column.id:}}
 					<thead>
 						<tr>
-								<td>{{=column.title}}</td>							
+							{{for column in detail.column.select():}}
+								<td>{{=A(column.title, _href=URL('new', args=['row', column.id]))}}</td>
+							{{pass}}							
 						</tr>
 					</thead>
 					<tbody>
-						{{for row in column.row.select():}} {{if row.column_id == column.id:}}
-							<tr>
-								<td>{{=row.content}}</td>
-							</tr>
-						{{pass}} {{pass}}
+							{{for column in detail.column.select():}}
+								{{for row in column.row.select():}}
+									{{if row.column_id == column.id:}}
+										
+									{{pass}}
+								{{pass}}
+							{{pass}}
 					</tbody>
-					{{pass}} {{pass}}
 				</table>
 				<div classs="quote">
 				{{for quote in detail.quote.select():}} {{if quote.publications_id == detail.id:}}
