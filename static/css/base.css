@@ -735,3 +735,19 @@ a.button:hover {
 .web2py_paginator ul li.current a {
     font-weight: bold !important;
 }
+
+table {
+	margin: 10px 15px;
+	border: 1px solid #ccc;
+}
+
+table thead tr td {
+	background: #ccc;
+	padding: 0 20px 0 5px;
+	text-align: left;
+	border:1px solid #c2c2c2;
+}
+
+table tbody tr td {
+	border:1px solid #ccc;
+}

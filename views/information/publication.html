@@ -5,8 +5,10 @@
 		<article>
 			{{for detail in publication: }}
 			<header>
+				{{=A( T('Go back to publications table'), _href=URL('information', 'profile', args=[session.index]) )}}
+				<hr />
 				<h1>{{=detail.title}}</h1>
-				<h4 style="font-weight: 200;">{{if detail.sub_title:}} {{=detail.title}} {{pass}}</h4>
+				<h4 style="font-weight: 200;">{{if detail.sub_title:}} {{=detail.sub_title}} {{pass}}</h4>
 				<hr />
 			</header>
 			<div>	

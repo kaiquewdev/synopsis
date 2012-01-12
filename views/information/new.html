@@ -1,0 +1,17 @@
+{{ extend 'layout.html' }}
+
+<div class="content">
+	<section>
+		<article>
+			<header>
+				{{=A(T('Visualize publications'), _href=URL('profile', args=[request.args[1]]))}}
+				<hr />
+				<h1>{{=T('{0} {1}'.format('New', title))}}</h1>
+				<hr />
+			</header>
+			<div>
+				{{=form}}
+			</div>	
+		</article>
+	</section>
+</div>

@@ -5,6 +5,9 @@
 		<article>
 			{{for subject in profile: }}
 			<header>
+				{{=A(T('Go back to synopses'), _href=URL('index') )}} |
+				{{=A(T('Insert new publication'), _href=URL('new', args=['publication', request.args[0]]) )}}
+				<hr />
 				<h1>{{=subject.name}}</h1>
 				<hr />
 			</header>
@@ -17,20 +20,20 @@
 						</tr>
 					</thead>
 					<tbody>
-							<tr>
-							{{for detail in subject.publication.select():}} {{if detail.subject_id == subject.id:}}
-								<td>
-									{{=detail.title}}
-								</td>
-								<td>
-									{{=A( T('Visualize this publication'),
-										  _href=URL( 'information', 
-										 			 'publication', 
-										 			 args=[detail.id] ) 
-									)}}
-								</td>
-							{{pass}} {{pass}}
-							</tr>
+						{{for detail in subject.publication.select():}} {{if detail.subject_id == subject.id:}}
+						<tr>
+							<td>
+								{{=detail.title}}
+							</td>
+							<td>
+								{{=A( T('Visualize this publication'),
+									  _href=URL( 'information', 
+									 			 'publication', 
+									 			 args=[detail.id] ) 
+								)}}
+							</td>
+						</tr>
+						{{pass}} {{pass}}
 					</tbody>
 				</table>
 			</div>
