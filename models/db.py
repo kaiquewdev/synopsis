@@ -98,4 +98,4 @@ db.define_table( 'row',
 # Quotes
 db.define_table( 'quote', 
 				Field('content', 'text', required = True),
-				Field('publications_id', db.publication), signature )
+				Field('publication_id', db.publication), signature )

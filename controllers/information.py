@@ -58,6 +58,21 @@ def new(): # Create a new subject
 	
 		return { 'form': publication,
 				 'title': title }
+				 
+	elif args[0] == 'quote':
+		title = 'Quote'
+		quote = SQLFORM(db.quote, fields=['content'])
+		quote.vars.publication_id = args[1]
+		if quote.process().accepted:
+			response.flash = T(T('{0} {1} {2}'.format('New', title.lower(), 'inserted!')))
+		elif quote.errors:
+			response.flash = T('Sorry, try again!')
+		else:
+			response.flahs = T('Please, fill the field...')
+	
+		return { 'form': quote,
+				 'title': title }
+				 
 	elif args[0] == 'column':
 		title = 'Topic'
 		column = SQLFORM(db.column, fields=['title'])
@@ -71,6 +86,7 @@ def new(): # Create a new subject
 	
 		return { 'form': column,
 				 'title': title }
+				 
 	elif args[0] == 'row':
 		title = 'Row for {0}'.format(db.column(args[1])['title'])
 		row = SQLFORM(db.row, fields=['content'])

@@ -128,3 +128,5 @@ CREATE TABLE subject(
 success!
 timestamp: 2012-01-11T22:05:00.160267
 ALTER TABLE publication ADD subject_id INTEGER REFERENCES subject(id) ON DELETE CASCADE;
+timestamp: 2012-01-14T01:18:51.545578
+ALTER TABLE quote ADD publication_id INTEGER REFERENCES publication(id) ON DELETE CASCADE;
