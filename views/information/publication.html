@@ -5,7 +5,7 @@
 		<article>
 			{{for detail in publication: }}
 			<header>
-				{{=A( T('Go back to publications table'), _href=URL('information', 'profile', args=[session.index]) )}} |
+				{{=A( T('Go to publications'), _href=URL('information', 'profile', args=[session.index]) )}} |
 				{{=A(T('Insert a new column'), _href=URL('new', args=['column', request.args[0]]) )}}
 				<hr />
 				<h1>{{=detail.title}}</h1>
@@ -22,19 +22,23 @@
 						</tr>
 					</thead>
 					<tbody>
-							{{for column in detail.column.select():}}
-								{{for row in column.row.select():}}
-									{{if row.column_id == column.id:}}
-										
-									{{pass}}
-								{{pass}}
+						{{ lines = {} }}
+						{{for column in detail.column.select():}}
+							{{lines[column.id] = TR()}}
+							{{for row in column.row.select():}}
+								{{lines[row.column_id].append(TD(row.content))}}
 							{{pass}}
+						{{pass}}
+
+						{{for l in lines:}}
+							{{=lines[l]}}
+						{{pass}}						
 					</tbody>
 				</table>
 				<div classs="quote">
-				{{for quote in detail.quote.select():}} {{if quote.publications_id == detail.id:}}
+				{{for quote in detail.quote.select():}}
 					<p>{{=quote.content}}</p>
-				{{pass}} {{pass}}
+				{{pass}}
 				</div>
 			</div>
 			{{pass}}
