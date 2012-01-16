@@ -6,7 +6,7 @@
 			{{for detail in publication: }}
 			<header>
 				{{=A( T('Go to publications'), _href=URL('profile', args=[session.index]) )}} |
-				{{=A( T('Insert a quote'), _href=URL('profile', args=['quote', request.args[0]]) )}} |
+				{{=A( T('Insert a quote'), _href=URL('new', args=['quote', request.args[0]]) )}} |
 				{{=A(T('Insert a new column'), _href=URL('new', args=['column', request.args[0]]) )}}
 				<hr />
 				<h1>{{=detail.title}}</h1>
@@ -23,26 +23,30 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{ columns = [column for column in detail.column.select()] }}
 						{{ lines = {} }}
 						
-						{{for column in detail.column.select():}}
-							{{lines[column.id] = TR()}}
-						{{pass}}
-						
-						{{for column in detail.column.select():}}
-							{{for row in column.row.select(orderby='created_on'):}}
-								{{lines[row.column_id].append(TD(row.content))}}
+						{{for column in columns:}}
+							{{if not lines.has_key(column.id):}}
+								{{lines[column.id] = TR()}}
+							{{pass}}
+							{{for row in column.row.select():}}
+								{{if lines.has_key(column.id):}}
+									{{lines[row.column_id].append( row.content )}}
+								{{pass}}
 							{{pass}}
 						{{pass}}
-
-						{{for l in lines:}}
-							{{=lines[l]}}
-						{{pass}}						
+						
+						{{for line in lines:}}
+							{{=lines[line]}}
+						{{pass}}
 					</tbody>
 				</table>
 				<div classs="quote">
-				{{for quote in detail.quote.select():}}
-					<p>{{=quote.content}}</p>
+				{{quotes = [quote for quote in detail.quote.select()]}}
+				{{if quotes:}}
+					{{quotes.reverse()}}
+					{{=quotes[0].content}}
 				{{pass}}
 				</div>
 			</div>

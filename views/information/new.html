@@ -4,7 +4,13 @@
 	<section>
 		<article>
 			<header>
-				{{=A(T('Visualize publications'), _href=URL('publication', args=[session.back]))}}
+				{{if not request.args:}}
+					{{=A(T('Visualize publications'), _href=URL('index'))}}
+				{{elif request.args[0] == 'publication':}}
+					{{=A(T('Visualize publications'), _href=URL('profile'))}}
+				{{else:}}
+					{{=A(T('Back to the publication'), _href=URL('publication', args=[session.back]))}}
+				{{pass}}
 				<hr />
 				<h1>{{=T('{0} {1}'.format('New', title))}}</h1>
 				<hr />

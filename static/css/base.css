@@ -736,18 +736,18 @@ a.button:hover {
     font-weight: bold !important;
 }
 
-table {
+table.pattern {
 	margin: 10px 15px;
 	border: 1px solid #ccc;
 }
 
-table thead tr td {
+table.pattern thead tr td {
 	background: #ccc;
 	padding: 0 20px 0 5px;
 	text-align: left;
 	border:1px solid #c2c2c2;
 }
 
-table tbody tr td {
+table.pattern tbody tr td {
 	border:1px solid #ccc;
 }
