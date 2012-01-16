@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import functions as f # shorthand function
 
-@auth.requires_membership('admin')
+@auth.requires_login()
 def index(): # Show the all content for redirect to profile
 	subject = f.get_table(db, 'subject', order='created_on')
 	return { 'subject': subject }
 
-@auth.requires_membership('admin')
+@auth.requires_login()
 def profile(): # Show the profile of subject
 	args = request.args # query url's
 	if args: 
@@ -15,7 +15,7 @@ def profile(): # Show the profile of subject
 	if not args or not profile: return redirect( URL('index') )
 	return { 'profile': profile }
 
-@auth.requires_membership('admin')
+@auth.requires_login()
 def publication(): # Show the publication profile
 	args = request.args # query url's
 	count_equals = f.count_equals
@@ -26,7 +26,7 @@ def publication(): # Show the publication profile
 	return { 'publication': publication, 
 			 'count_equals': count_equals }
 
-@auth.requires_membership('admin')
+@auth.requires_login()
 def new(): # Create a new subject
 	args = request.args
 	
@@ -86,6 +86,19 @@ def new(): # Create a new subject
 	
 		return { 'form': column,
 				 'title': title }
+	
+	elif args[0] == 'line':
+		title = 'Line'
+:
+		if column.process().accepted:
+			response.flash = T(T('{0} {1} {2}'.format('New', title.lower(), 'inserted!')))
+		elif column.errors:
+			response.flash = T('Sorry, try again!')
+		else:
+			response.flahs = T('Please, fill the field...')
+	:
+		return { 'form': column,
+				 'title': title }
 				 
 	elif args[0] == 'row':
 		title = 'Row for {0}'.format(db.column(args[1])['title'])
@@ -101,6 +114,6 @@ def new(): # Create a new subject
 		return { 'form': row,
 				 'title': title }
 			 	 
-@auth.requires_membership('admin')
+@auth.requires_login()
 def edit(): # Edit the subject
 	return {}

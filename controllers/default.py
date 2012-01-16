@@ -2,9 +2,12 @@
 
 def index():
 	return {}
+
+def about():
+	return {}
 	
 def user():
-    return dict(form=auth())
+    return {'form': auth()}
 
 def download():
     return response.download(request,db)

@@ -60,13 +60,13 @@ p24
 ssS'publications_id'
 p25
 (dp26
-S'sortable'
+S'type'
 p27
-I3
-sS'type'
-p28
 S'reference publication'
+p28
+sS'sortable'
 p29
+I3
 sS'sql'
 p30
 S'INTEGER REFERENCES publication(id) ON DELETE CASCADE'
