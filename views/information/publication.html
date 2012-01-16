@@ -24,15 +24,26 @@
 					</thead>
 					<tbody>
 						{{ columns = [column for column in detail.column.select()] }}
+						{{ rows = [[row for row in column.row.select()] for column in detail.column.select()] }}
 						{{ lines = {} }}
+						{{ lid = []}}
 						
-						{{for column in columns:}}
-							{{if not lines.has_key(column.id):}}
-								{{lines[column.id] = TR()}}
+						{{if columns:}}
+							{{for c in range(len(columns)):}}
+								{{if not lines.has_key(c):}}
+									{{lines[c] = TR()}}
+									{{lid.append([])}}
+								{{pass}}
 							{{pass}}
-							{{for row in column.row.select():}}
-								{{if lines.has_key(column.id):}}
-									{{lines[row.column_id].append( row.content )}}
+							
+							{{for row in rows:}}
+								{{for r in row:}}
+									{{for c in range(len(columns)):}}
+										{{if not r.column_id in lid[c]:}}
+											{{lid[c].append(r.column_id)}}
+											{{lines[c].append(r.content)}}
+										{{pass}}
+									{{pass}}
 								{{pass}}
 							{{pass}}
 						{{pass}}
