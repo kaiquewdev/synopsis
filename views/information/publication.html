@@ -9,7 +9,7 @@
 				{{=A( T('Insert a quote'), _href=URL('new', args=['quote', request.args[0]]) )}} |
 				{{=A(T('Insert a new column'), _href=URL('new', args=['column', request.args[0]]) )}}
 				<hr />
-				{{if detail.title:}}<h1> {{=detail.title}} </h1>{{pass}}
+				<h1> {{=detail.title}} </h1>
 				{{if detail.sub_title:}} <h4 style="font-weight: 200;"> {{=detail.sub_title}} </h4>{{pass}}
 				<hr />
 			</header>
@@ -27,7 +27,9 @@
 					<tbody>
 						<!-- Sets of table -->
 						{{ columns = [column for column in detail.column.select()] }}
-						{{ rows = [[row for row in column.row.select()] for column in detail.column.select()] }}
+						{{ rows = [
+									[row for row in column.row.select()] 
+									for column in detail.column.select()]}}
 						{{ lines = {} }}
 						{{ rid = []}}
 						{{ lid = []}}
@@ -41,6 +43,7 @@
 								{{pass}}
 							{{pass}}
 							
+							<!-- logic for create all rows -->
 							{{for row in rows:}}
 								{{for r in row:}}
 									{{for c in range(len(columns)):}}

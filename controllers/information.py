@@ -36,7 +36,10 @@ def new(): # Create a new subject
 		subject.elements(_type='submit')[0]['_value'] = 'Create'
 		
 		if subject.process().accepted:
-			response.flash = T('{0} {1} {2}'.format('New', title.lower(), 'inserted!'))
+			response.flash = T(
+                                    '{0} {1} {2}'
+                                    .format('New', title.lower(), 'inserted!')
+                                )
 		elif subject.errors:
 			response.flash = T('Sorry, try again!')
 		else:
@@ -89,15 +92,23 @@ def new(): # Create a new subject
 	
 	elif args[0] == 'line':
 		title = 'Line'
-:
-		if column.process().accepted:
-			response.flash = T(T('{0} {1} {2}'.format('New', title.lower(), 'inserted!')))
-		elif column.errors:
-			response.flash = T('Sorry, try again!')
+		line = FORM()
+		
+		for publication in f.get_table(db, 'publication', id= args[1]):
+			for column in publication.column.select():					
+				line.append(LABEL('{0}{1}'.format(column.title, ':')))
+				line.append(BR())
+				line.append(INPUT(_name=column.title, _type='text'))
+				line.append(BR())
+		
+		line.append(INPUT(_type='submit', _value=T('Create')))
+		
+		if line.process(formname='new_line').accepted:
+			response.flash = 'New line was created!'
 		else:
-			response.flahs = T('Please, fill the field...')
-	:
-		return { 'form': column,
+			response.flash = 'Oops, try again!'
+					
+		return { 'form': line,
 				 'title': title }
 				 
 	elif args[0] == 'row':

@@ -8,6 +8,7 @@
 					{{=A(T('Visualize publications'), _href=URL('index'))}}
 				{{elif request.args[0] == 'publication':}}
 					{{=A(T('Visualize publications'), _href=URL('profile'))}}
+				{{elif request.args[0] == 'line':}}
 				{{else:}}
 					{{=A(T('Back to the publication'), _href=URL('publication', args=[session.back]))}}
 				{{pass}}
