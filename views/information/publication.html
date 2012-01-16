@@ -23,11 +23,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						<!-- Sets of table -->
 						{{ columns = [column for column in detail.column.select()] }}
 						{{ rows = [[row for row in column.row.select()] for column in detail.column.select()] }}
 						{{ lines = {} }}
+						{{ rid = []}}
 						{{ lid = []}}
 						
+						<!-- Complete table -->
 						{{if columns:}}
 							{{for c in range(len(columns)):}}
 								{{if not lines.has_key(c):}}
@@ -39,17 +42,19 @@
 							{{for row in rows:}}
 								{{for r in row:}}
 									{{for c in range(len(columns)):}}
-										{{if not r.column_id in lid[c]:}}
+										{{if not r.column_id in lid[c] and not r.id in rid:}}
+											{{rid.append(r.id)}}
 											{{lid[c].append(r.column_id)}}
 											{{lines[c].append(r.content)}}
 										{{pass}}
 									{{pass}}
 								{{pass}}
 							{{pass}}
-						{{pass}}
-						
-						{{for line in lines:}}
-							{{=lines[line]}}
+							
+							<!-- Lines of table -->
+							{{for line in lines:}}
+								{{=lines[line]}}
+							{{pass}}
 						{{pass}}
 					</tbody>
 				</table>
