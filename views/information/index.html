@@ -15,7 +15,7 @@
 					<table style="border: 1px solid #ccc;">
 						<thead>
 							<tr>
-								<td>Title of subject</td>
+								<td>{{=T('Title of subject')}}</td>
 								<td></td>
 							</tr>
 						</thead>
@@ -34,7 +34,7 @@
 						</tbody>
 					</table>
 				{{else:}}
-					{{=P( T('Not synopse, registred! {0}'.format( A(T('Create new'), _href = URL('information', 'new') ) ) ) )}}
+					{{=P( T('{0}'.format('Not synopse, registred!')) )}}
 				{{pass}}
 			</div>
 		</article>

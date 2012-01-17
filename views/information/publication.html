@@ -29,37 +29,64 @@
 						{{ columns = [column for column in detail.column.select()] }}
 						{{ rows = [
 									[row for row in column.row.select()] 
-									for column in detail.column.select()]}}
-						{{ lines = {} }}
-						{{ rid = []}}
-						{{ lid = []}}
-						
+									for column in detail.column.select()
+								]
+						}}
+
 						<!-- Complete table -->
 						{{if columns:}}
-							{{for c in range(len(columns)):}}
-								{{if not lines.has_key(c):}}
-									{{lines[c] = TR()}}
-									{{lid.append([])}}
+							{{ lines = {} }}
+							{{ urows = {} }}
+							{{ rid = [] }}
+							{{ lid = [] }}
+							{{ ul = [] }}
+
+							{{for column in columns:}}
+								{{if not lines.has_key(column.id):}}
+									{{lines[column.id] = []}}
 								{{pass}}
 							{{pass}}
-							
-							<!-- logic for create all rows -->
+
+
 							{{for row in rows:}}
 								{{for r in row:}}
-									{{for c in range(len(columns)):}}
-										{{if not r.column_id in lid[c] and not r.id in rid:}}
+									{{for n in range( len(columns) ):}}
+										{{if not r.id in rid:}}
 											{{rid.append(r.id)}}
-											{{lid[c].append(r.column_id)}}
-											{{lines[c].append(r.content)}}
+											
+											{{for line in lines:}}
+												{{if r.column_id == line:}}
+													{{lines[line].append(r.content)}}
+												{{pass}}
+											{{pass}}
+										{{pass}}
+									{{pass}}
+								{{pass}}
+							{{pass}} 
+						
+							{{for line in lines:}}
+								{{for n in range(len(columns)):}}
+									{{for row in range(len(lines[line])):}}
+										{{if not row in ul:}}
+											{{ul.append(row)}}
 										{{pass}}
 									{{pass}}
 								{{pass}}
 							{{pass}}
 							
-							<!-- Lines of table -->
-							{{for line in lines:}}
-								{{=lines[line]}}
+							{{for u in ul:}}
+								{{urows[u] = TR()}}
+								
+								{{for line in lines:}}
+									{{urows[u].append(lines[line][u])}}
+								{{pass}}
 							{{pass}}
+							
+							<!-- Lines of table -->
+							{{for u in urows:}}
+								{{=urows[u]}}
+							{{pass}}
+							
 						{{pass}}
 					</tbody>
 				</table>

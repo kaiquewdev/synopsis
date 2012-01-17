@@ -30,7 +30,7 @@ def publication(): # Show the publication profile
 def new(): # Create a new subject
 	args = request.args
 	
-	if not args:
+	if not args: # New Subject
 		title = 'Subject'
 		subject = SQLFORM(db.subject, fields=['name'])
 		subject.elements(_type='submit')[0]['_value'] = 'Create'
@@ -48,7 +48,7 @@ def new(): # Create a new subject
 		return { 'form': subject, 
 			 	 'title': title }
 	
-	elif args[0] == 'publication':
+	elif args[0] == 'publication': # New publication
 		title = 'Publication'
 		publication = SQLFORM(db.publication, fields=['title', 'sub_title'])
 		publication.vars.subject_id = args[1]
@@ -62,7 +62,7 @@ def new(): # Create a new subject
 		return { 'form': publication,
 				 'title': title }
 				 
-	elif args[0] == 'quote':
+	elif args[0] == 'quote': # New quote
 		title = 'Quote'
 		quote = SQLFORM(db.quote, fields=['content'])
 		quote.vars.publication_id = args[1]
@@ -76,7 +76,7 @@ def new(): # Create a new subject
 		return { 'form': quote,
 				 'title': title }
 				 
-	elif args[0] == 'column':
+	elif args[0] == 'column': # New column
 		title = 'Topic'
 		column = SQLFORM(db.column, fields=['title'])
 		column.vars.publication_id = args[1]
@@ -90,7 +90,7 @@ def new(): # Create a new subject
 		return { 'form': column,
 				 'title': title }
 	
-	elif args[0] == 'line':
+	elif args[0] == 'line': # New line
 		title = 'Line'
 		line = FORM()
 		
@@ -98,20 +98,27 @@ def new(): # Create a new subject
 			for column in publication.column.select():					
 				line.append(LABEL('{0}{1}'.format(column.title, ':')))
 				line.append(BR())
-				line.append(INPUT(_name=column.title, _type='text'))
+				line.append(INPUT(_name=column.id, _type='text', requires=[IS_NOT_EMPTY()]))
 				line.append(BR())
 		
 		line.append(INPUT(_type='submit', _value=T('Create')))
 		
 		if line.process(formname='new_line').accepted:
-			response.flash = 'New line was created!'
+			fields = []
+			for l in line.vars:
+				fields.append({'content': line.vars[l], 'column_id': l})
+				
+			if db.row.bulk_insert(fields):
+				response.flash = T('New line was created!')
+		elif line.errors:
+			response.flash = T('Try the fill inputs again!')
 		else:
-			response.flash = 'Oops, try again!'
+			response.flash = T('Please, fill all inputs...')
 					
 		return { 'form': line,
 				 'title': title }
 				 
-	elif args[0] == 'row':
+	elif args[0] == 'row': # New row (Remove this part)
 		title = 'Row for {0}'.format(db.column(args[1])['title'])
 		row = SQLFORM(db.row, fields=['content'])
 		row.vars.column_id = args[1]
